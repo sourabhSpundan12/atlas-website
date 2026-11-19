@@ -1,0 +1,176 @@
+<div class="contact-page">
+  <div class="container contact-container">
+    <div class="contact-header text-center">
+      <span class="badge badge-blue">Direct Communication</span>
+      <h1 class="page-title">We're Here to Help Your Team Scale</h1>
+      <p class="page-subtitle">
+        Have questions regarding plans, multi-tenant security architecture, or custom payroll policies? Reach out to our team.
+      </p>
+    </div>
+
+    <!-- Quick Info Cards -->
+    <div class="grid-3 contact-cards-grid">
+      <div class="card info-card">
+        <div class="icon-circle"><i class="fa-regular fa-envelope"></i></div>
+        <h4>Sales & Consultations</h4>
+        <p>Talk directly with an HR operations specialist.</p>
+        <a href="mailto:sales@hratlas.com" class="link-val">sales&#64;hratlas.com</a>
+        <span class="sub-val">Typical reply: &lt; 2 hours</span>
+      </div>
+
+      <div class="card info-card">
+        <div class="icon-circle"><i class="fa-solid fa-headset"></i></div>
+        <h4>Technical Support</h4>
+        <p>Existing customers needing assistance or SLA support.</p>
+        <a href="mailto:support@hratlas.com" class="link-val">support&#64;hratlas.com</a>
+        <span class="sub-val">24/7 dedicated response</span>
+      </div>
+
+      <div class="card info-card">
+        <div class="icon-circle"><i class="fa-solid fa-phone"></i></div>
+        <h4>Toll-Free Phone</h4>
+        <p>Monday - Friday, 9:00 AM - 7:00 PM IST / EST.</p>
+        <a href="tel:+18004728527" class="link-val">+1 (800) 472-8527</a>
+        <span class="sub-val">+91 (80) 4920-8500 (India)</span>
+      </div>
+    </div>
+
+    <!-- Form & Offices Row -->
+    <div class="contact-main-grid">
+      <!-- Contact Form -->
+      <div class="card form-box">
+        <div *ngIf="!isSubmitted">
+          <h3>Send Us a Message</h3>
+          <p class="form-sub">Fill out the form below and we will route your enquiry to the appropriate department.</p>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="fullName">Your Full Name *</label>
+                <input
+                  id="fullName"
+                  type="text"
+                  class="form-control"
+                  placeholder="e.g. Sarah Jenkins"
+                  formControlName="fullName"
+                  [class.is-invalid]="contactForm.get('fullName')?.touched && contactForm.get('fullName')?.invalid"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="sarah@company.com"
+                  formControlName="email"
+                  [class.is-invalid]="contactForm.get('email')?.touched && contactForm.get('email')?.invalid"
+                />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number *</label>
+                <input
+                  id="phoneNumber"
+                  type="tel"
+                  class="form-control"
+                  placeholder="+91 9876543210"
+                  formControlName="phoneNumber"
+                  [class.is-invalid]="contactForm.get('phoneNumber')?.touched && contactForm.get('phoneNumber')?.invalid"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="companyName">Company Name *</label>
+                <input
+                  id="companyName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Acme Global"
+                  formControlName="companyName"
+                  [class.is-invalid]="contactForm.get('companyName')?.touched && contactForm.get('companyName')?.invalid"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="department">Routing Department *</label>
+              <select id="department" class="form-control" formControlName="department">
+                <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Detailed Inquiry / Message *</label>
+              <textarea
+                id="message"
+                class="form-control"
+                rows="4"
+                placeholder="How can our engineering or product team assist you?"
+                formControlName="message"
+                [class.is-invalid]="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSubmitting">
+              <span *ngIf="!isSubmitting">Dispatch Message</span>
+              <span *ngIf="isSubmitting"><span class="spinner"></span> Transmitting...</span>
+              <i *ngIf="!isSubmitting" class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="text-center success-box" *ngIf="isSubmitted">
+          <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <h3>Enquiry Received</h3>
+          <p class="success-desc">{{ responseMsg }}</p>
+          <a routerLink="/" class="btn btn-primary">Return to Homepage</a>
+        </div>
+      </div>
+
+      <!-- Offices & Global Footprint -->
+      <div class="offices-box">
+        <h3>Global Engineering & Support Hubs</h3>
+        <p class="offices-desc">Serving customers across North America, EMEA, and APAC.</p>
+
+        <div class="office-list">
+          <div class="office-item">
+            <div class="off-icon"><i class="fa-solid fa-building"></i></div>
+            <div>
+              <h5>Bengaluru Technology Center</h5>
+              <p>RMZ Infinity, Tower D, Old Madras Road, Bengaluru 560016, India</p>
+            </div>
+          </div>
+
+          <div class="office-item">
+            <div class="off-icon"><i class="fa-solid fa-city"></i></div>
+            <div>
+              <h5>Silicon Valley Office</h5>
+              <p>440 N Bernardo Ave, Mountain View, CA 94043, USA</p>
+            </div>
+          </div>
+
+          <div class="office-item">
+            <div class="off-icon"><i class="fa-solid fa-earth-americas"></i></div>
+            <div>
+              <h5>London EMEA Hub</h5>
+              <p>1 Canada Square, Canary Wharf, London E14 5AA, United Kingdom</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cloud-security-badge">
+          <i class="fa-solid fa-shield-halved text-success"></i>
+          <div>
+            <strong>100% In-Region Data Residency</strong>
+            <p>Customer data stored in compliance with local residency guidelines.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

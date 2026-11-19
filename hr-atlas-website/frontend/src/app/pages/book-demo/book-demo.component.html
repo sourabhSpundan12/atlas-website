@@ -1,0 +1,177 @@
+<div class="demo-page">
+  <div class="container demo-container">
+    <div class="demo-grid">
+      <!-- Left Hero/Info Column -->
+      <div class="demo-info-col">
+        <span class="badge badge-blue">Live 1-on-1 Product Tour</span>
+        <h1 class="demo-title">Experience HR Atlas with a Product Specialist</h1>
+        <p class="demo-subtitle">
+          See how leading organizations automate payroll in minutes, manage geofenced attendance with auto clock-out, and maintain pristine asset inventories.
+        </p>
+
+        <div class="perks-list">
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fa-solid fa-desktop"></i></div>
+            <div>
+              <h6>Tailored 30-Minute Walkthrough</h6>
+              <p>Customized to your exact company headcount and existing HR pain points.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fa-solid fa-calculator"></i></div>
+            <div>
+              <h6>Payroll & Tax Simulation</h6>
+              <p>See real-time salary calculations, TDS deductions, and automated PDF payslip generation.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <h6>Data Migration Consultation</h6>
+              <p>Learn how to cleanly migrate from Excel, greytHR, Zoho People, or BambooHR with zero downtime.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rating-strip">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <span class="rating-text">Rated 4.9/5 by 300+ People Operations Leaders</span>
+        </div>
+      </div>
+
+      <!-- Right Form Column -->
+      <div class="demo-form-col">
+        <div class="form-card" *ngIf="!isSubmitted">
+          <h3>Schedule Your Personalized Session</h3>
+          <p class="form-desc">Pick your modules and preferred time to lock in your live consultation.</p>
+
+          <form [formGroup]="demoForm" (ngSubmit)="onSubmit()">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input
+                  id="fullName"
+                  type="text"
+                  class="form-control"
+                  placeholder="e.g. David Miller"
+                  formControlName="fullName"
+                  [class.is-invalid]="demoForm.get('fullName')?.touched && demoForm.get('fullName')?.invalid"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="david@company.com"
+                  formControlName="email"
+                  [class.is-invalid]="demoForm.get('email')?.touched && demoForm.get('email')?.invalid"
+                />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number *</label>
+                <input
+                  id="phoneNumber"
+                  type="tel"
+                  class="form-control"
+                  placeholder="+91 9876543210"
+                  formControlName="phoneNumber"
+                  [class.is-invalid]="demoForm.get('phoneNumber')?.touched && demoForm.get('phoneNumber')?.invalid"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="companyName">Company Name *</label>
+                <input
+                  id="companyName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Acme Technologies"
+                  formControlName="companyName"
+                  [class.is-invalid]="demoForm.get('companyName')?.touched && demoForm.get('companyName')?.invalid"
+                />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="companySize">Team Size *</label>
+                <select id="companySize" class="form-control" formControlName="companySize">
+                  <option *ngFor="let s of companySizes" [value]="s">{{ s }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="preferredDate">Preferred Date</label>
+                <input
+                  id="preferredDate"
+                  type="date"
+                  class="form-control"
+                  formControlName="preferredDate"
+                />
+              </div>
+            </div>
+
+            <!-- Modules Selection -->
+            <div class="form-group">
+              <label>Modules You Would Like to See:</label>
+              <div class="modules-chip-grid">
+                <button
+                  type="button"
+                  *ngFor="let mod of availableModules"
+                  class="mod-chip"
+                  [class.selected]="selectedModules.includes(mod.id)"
+                  (click)="toggleModule(mod.id)"
+                >
+                  <i class="fa-solid" [class.fa-check]="selectedModules.includes(mod.id)" [class.fa-plus]="!selectedModules.includes(mod.id)"></i>
+                  <span>{{ mod.label }}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Specific questions or current setup?</label>
+              <textarea
+                id="message"
+                class="form-control"
+                rows="3"
+                placeholder="Currently using spreadsheets / greytHR / Zoho People and looking for cleaner attendance and payroll..."
+                formControlName="message"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" [disabled]="isSubmitting">
+              <span *ngIf="!isSubmitting">Confirm Demo Session</span>
+              <span *ngIf="isSubmitting"><span class="spinner"></span> Securing Slot...</span>
+              <i *ngIf="!isSubmitting" class="fa-solid fa-calendar-check"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Success Confirmation -->
+        <div class="form-card text-center success-card" *ngIf="isSubmitted">
+          <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <h3>Demo Session Requested!</h3>
+          <p class="success-desc">{{ successMessage }}</p>
+          <div class="session-box">
+            <span>A calendar invite with Google Meet / Zoom link will be sent to</span>
+            <strong>{{ demoForm.get('email')?.value }}</strong>
+          </div>
+          <a routerLink="/" class="btn btn-primary">Return to Homepage</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

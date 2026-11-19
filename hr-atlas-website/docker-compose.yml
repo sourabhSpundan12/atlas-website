@@ -1,0 +1,52 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: hr-atlas-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=HrAtlas_SaaS_Db
+    networks:
+      - hr-atlas-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hr-atlas-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseSettings__ConnectionString=mongodb://mongodb:27017
+      - DatabaseSettings__DatabaseName=HrAtlas_SaaS_Db
+      - JwtSettings__Secret=HR_ATLAS_SUPER_SECRET_KEY_FOR_JWT_ENCRYPTION_AND_SIGNING_2026_PRODUCTION_GRADE!
+    depends_on:
+      - mongodb
+    networks:
+      - hr-atlas-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hr-atlas-frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - hr-atlas-network
+
+networks:
+  hr-atlas-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HrAtlas.SaaS</name>
+    </assembly>
+    <members>
+        <member name="M:HrAtlas.SaaS.Controllers.AuthController.Login(HrAtlas.SaaS.DTOs.LoginRequestDto)">
+            <summary>
+            Authenticates an organisation user and issues a tenant-scoped JWT token.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.AuthController.SendOtp(HrAtlas.SaaS.DTOs.SendOtpRequestDto)">
+            <summary>
+            Dispatches a cryptographic 6-digit OTP to the specified work email address.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.AuthController.VerifyOtp(HrAtlas.SaaS.DTOs.VerifyOtpRequestDto)">
+            <summary>
+            Verifies the 6-digit OTP code against the registered hash and expiration.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.AuthController.ForgotPassword(HrAtlas.SaaS.DTOs.ForgotPasswordRequestDto)">
+            <summary>
+            Resets an account password after verified OTP confirmation.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.RegisterTenant(HrAtlas.SaaS.DTOs.TenantRegistrationRequestDto)">
+            <summary>
+            Registers a new SaaS organisation, provisions workspace, creates primary admin, and activates 14-day trial.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.CheckSlug(System.String)">
+            <summary>
+            Checks real-time availability of a company workspace subdomain.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.ContactInquiry(HrAtlas.SaaS.DTOs.ContactInquiryRequestDto)">
+            <summary>
+            Captures product demo bookings and contact inquiries.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.GetPlans">
+            <summary>
+            Retrieves all public SaaS subscription plans and feature comparisons.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.CreateCheckout(HrAtlas.SaaS.DTOs.CreateCheckoutRequestDto)">
+            <summary>
+            Creates a secure payment checkout session for upgrading or renewing a subscription.
+            Tenant identity is extracted securely from the validated JWT authentication context.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.SubscriptionWebhook(HrAtlas.SaaS.DTOs.WebhookPayloadDto)">
+            <summary>
+            Secure payment gateway webhook endpoint with HMAC-SHA256 signature verification.
+            </summary>
+        </member>
+        <member name="M:HrAtlas.SaaS.Controllers.SaasController.GetOrganisationUsage">
+            <summary>
+            Retrieves live seat utilization, license limits, and active modules for the authenticated organisation.
+            Tenant identity is resolved solely from cryptographically validated token context.
+            </summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>

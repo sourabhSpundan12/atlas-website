@@ -1,0 +1,99 @@
+<section class="features-hero">
+  <div class="container text-center">
+    <span class="badge badge-blue">Complete Product Tour</span>
+    <h1 class="page-title">Enterprise Capabilities Designed for Modern Work</h1>
+    <p class="page-subtitle">
+      Explore the 10 built-in core modules powering HR Atlas. Everything scaling enterprises need to manage people, time, payroll, and equipment in one unified architecture.
+    </p>
+
+    <!-- Category Filter Pills -->
+    <div class="category-filters">
+      <button [class.active]="selectedCategory === 'all'" (click)="filterCategory('all')">
+        All Capabilities (10)
+      </button>
+      <button [class.active]="selectedCategory === 'operations'" (click)="filterCategory('operations')">
+        Time, Attendance & Operations
+      </button>
+      <button [class.active]="selectedCategory === 'finance'" (click)="filterCategory('finance')">
+        Payroll, Payslips & Tax
+      </button>
+      <button [class.active]="selectedCategory === 'core'" (click)="filterCategory('core')">
+        Lifecycle & Profiles
+      </button>
+      <button [class.active]="selectedCategory === 'engagement'" (click)="filterCategory('engagement')">
+        Onboarding & Broadcasts
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Detailed Modules List -->
+<section class="section section-slate features-list-section">
+  <div class="container">
+    <div class="modules-stack">
+      <div *ngFor="let mod of filteredModules; let idx = index" class="module-card-deep" [id]="mod.id">
+        <div class="module-deep-header">
+          <div class="mod-icon-box">
+            <i [class]="mod.icon"></i>
+          </div>
+          <div class="mod-meta">
+            <div class="badge-row">
+              <span class="badge badge-blue">{{ mod.badge }}</span>
+              <span class="mod-index">Module 0{{ idx + 1 }}</span>
+            </div>
+            <h2>{{ mod.name }}</h2>
+            <p class="mod-summary">{{ mod.summary }}</p>
+          </div>
+        </div>
+
+        <div class="module-deep-body">
+          <div class="highlights-col">
+            <h4><i class="fa-solid fa-list-check"></i> Key Capabilities</h4>
+            <ul class="highlights-list">
+              <li *ngFor="let item of mod.highlights">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span>{{ item }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="workflow-col">
+            <h4><i class="fa-solid fa-diagram-project"></i> Execution Workflow</h4>
+            <div class="workflow-stepper">
+              <div *ngFor="let step of mod.workflow; let sIdx = index" class="wf-step">
+                <div class="wf-dot">{{ sIdx + 1 }}</div>
+                <div class="wf-label">{{ step }}</div>
+                <div *ngIf="sIdx < mod.workflow.length - 1" class="wf-line"></div>
+              </div>
+            </div>
+
+            <div class="action-box">
+              <a routerLink="/signup" class="btn btn-primary btn-sm">Try in Free Trial</a>
+              <a routerLink="/book-a-demo" class="btn btn-outline btn-sm">Request Live Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="cta-banner">
+  <div class="container cta-container">
+    <div class="cta-text">
+      <h2>Ready to See All 10 Modules in Action?</h2>
+      <p>Set up your company workspace in under 2 minutes. No credit card or contract required.</p>
+    </div>
+    <div class="cta-buttons">
+      <a routerLink="/signup" class="btn btn-white btn-lg">
+        <span>Start 14-Day Free Trial</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a routerLink="/book-a-demo" class="btn btn-outline-white btn-lg">
+        <span>Schedule Guided Demo</span>
+      </a>
+    </div>
+  </div>
+</section>
+

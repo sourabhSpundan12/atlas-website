@@ -1,0 +1,203 @@
+<section class="pricing-hero">
+  <div class="container text-center">
+    <span class="badge badge-blue">Simple, Transparent Pricing</span>
+    <h1 class="page-title">Predictable Plans for High-Performing Teams</h1>
+    <p class="page-subtitle">
+      No hidden charges, setup fees, or lock-in contracts. Every plan includes an instant 14-day free trial.
+    </p>
+
+    <!-- Controls Row: Billing Toggle & Currency -->
+    <div class="pricing-controls">
+      <!-- Monthly / Annual Toggle -->
+      <div class="billing-switcher">
+        <button [class.active]="!isAnnual" (click)="toggleBilling(false)">Monthly</button>
+        <button [class.active]="isAnnual" (click)="toggleBilling(true)">
+          <span>Annual Billing</span>
+          <span class="save-pill">Save 20%</span>
+        </button>
+      </div>
+
+      <!-- Currency Switcher -->
+      <div class="currency-switcher">
+        <button [class.active]="currency === 'INR'" (click)="toggleCurrency('INR')">&#8377; INR</button>
+        <button [class.active]="currency === 'USD'" (click)="toggleCurrency('USD')">$ USD</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Cards Grid -->
+<section class="section section-slate pricing-cards-section">
+  <div class="container">
+    <div class="grid-3 pricing-grid">
+      <div *ngFor="let plan of plans" class="card price-card" [class.popular]="plan.isPopular">
+        <div class="popular-ribbon" *ngIf="plan.isPopular">
+          <i class="fa-solid fa-crown"></i> Most Popular
+        </div>
+
+        <div class="plan-header">
+          <h3 class="plan-name">{{ plan.name }}</h3>
+          <p class="plan-tagline">{{ plan.tagline }}</p>
+
+          <div class="price-box">
+            <span class="currency-symbol">{{ currency === 'INR' ? '&#8377;' : '$' }}</span>
+            <span class="price-value">
+              {{
+                currency === 'INR'
+                  ? (isAnnual ? (plan.annualPriceINR | number) : (plan.monthlyPriceINR | number))
+                  : (isAnnual ? plan.annualPriceUSD : plan.monthlyPriceUSD)
+              }}
+            </span>
+            <span class="period">/ month</span>
+          </div>
+          <span class="billed-note" *ngIf="isAnnual">Billed annually (Save 20%)</span>
+          <span class="billed-note" *ngIf="!isAnnual">Billed monthly</span>
+
+          <div class="seat-badge">
+            <i class="fa-solid fa-user-group"></i> Up to {{ plan.maxSeats }} Employees
+          </div>
+
+          <button (click)="selectPlan(plan.id)" class="btn btn-block" [ngClass]="plan.isPopular ? 'btn-primary' : 'btn-outline'">
+            <span>Start 14-Day Free Trial</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <div class="plan-features">
+          <h6>Included Capabilities:</h6>
+          <ul class="features-list">
+            <li *ngFor="let feat of plan.features">
+              <i class="fa-solid fa-check text-success"></i>
+              <span>{{ feat }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Detailed Plan Feature Matrix -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-blue">Feature Breakdown</span>
+      <h2 class="section-title">Compare All Features by Tier</h2>
+      <p class="section-subtitle">A comprehensive breakdown of modules and capabilities across plans.</p>
+    </div>
+
+    <div class="matrix-table-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Module & Capability</th>
+            <th>Starter</th>
+            <th class="col-pop">Growth</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-row"><td colspan="4">People & Lifecycle</td></tr>
+          <tr>
+            <td>Employee Profiles & Document Vault</td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+          <tr>
+            <td>Automated Onboarding Welcome Emails</td>
+            <td><i class="fa-solid fa-xmark text-muted"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">Attendance & Leave Operations</td></tr>
+          <tr>
+            <td>Web Clock-In & Time Logs</td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+          <tr>
+            <td>Automated Auto Clock-Out Engine</td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+          <tr>
+            <td>Compensatory Off (Comp-Off) Tracking</td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+          <tr>
+            <td>Project Timesheets & Billable Hours</td>
+            <td><i class="fa-solid fa-xmark text-muted"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">Payroll & Compensation</td></tr>
+          <tr>
+            <td>Dual Tax Regime Salary Engine</td>
+            <td><i class="fa-solid fa-xmark text-muted"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+          <tr>
+            <td>Automated PDF Payslip Generation</td>
+            <td><i class="fa-solid fa-xmark text-muted"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">Asset & Hardware Governance</td></tr>
+          <tr>
+            <td>Hardware & Asset Inventory Tracking</td>
+            <td><i class="fa-solid fa-xmark text-muted"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">Security & Support</td></tr>
+          <tr>
+            <td>Multi-Tenant Data Isolation</td>
+            <td><i class="fa-solid fa-check text-success"></i></td>
+            <td class="col-pop"><i class="fa-solid fa-check text-success"></i></td>
+            <td><i class="fa-solid fa-check text-success"></i> Dedicated Cluster Option</td>
+          </tr>
+          <tr>
+            <td>Support SLA</td>
+            <td>Email (48h)</td>
+            <td class="col-pop">Priority Chat (4h)</td>
+            <td>Dedicated Account Lead & 99.9% SLA</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Accordion -->
+<section class="section section-slate">
+  <div class="container container-narrow">
+    <div class="section-header">
+      <span class="badge badge-blue">Frequently Asked Questions</span>
+      <h2 class="section-title">Everything You Need to Know</h2>
+      <p class="section-subtitle">Common questions regarding pricing, data ownership, trials, and onboarding.</p>
+    </div>
+
+    <div class="faq-accordion">
+      <div *ngFor="let faq of faqs; let fIdx = index" class="faq-item" [class.open]="faq.isOpen">
+        <button class="faq-question" (click)="toggleFaq(fIdx)">
+          <span>{{ faq.question }}</span>
+          <i class="fa-solid" [class.fa-plus]="!faq.isOpen" [class.fa-minus]="faq.isOpen"></i>
+        </button>
+        <div class="faq-answer" *ngIf="faq.isOpen">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

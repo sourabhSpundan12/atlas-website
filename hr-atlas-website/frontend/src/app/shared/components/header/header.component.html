@@ -1,0 +1,89 @@
+<header class="site-header" [class.scrolled]="isScrolled">
+  <div class="container header-container">
+    <!-- Brand Logo -->
+    <a routerLink="/" class="brand-logo" (click)="closeMobileMenu()">
+      <div class="logo-symbol">
+        <i class="fa-solid fa-layer-group"></i>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">HR Atlas</span>
+        <span class="logo-badge">SaaS</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
+      <a routerLink="/features" routerLinkActive="active" class="nav-link">Features</a>
+      <a routerLink="/pricing" routerLinkActive="active" class="nav-link">Pricing</a>
+      <a routerLink="/about" routerLinkActive="active" class="nav-link">About</a>
+      <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Header Action CTAs -->
+    <div class="header-actions">
+      <a routerLink="/book-a-demo" class="btn btn-outline btn-sm">
+        <i class="fa-regular fa-calendar-check"></i>
+        <span>Book a Demo</span>
+      </a>
+
+      <ng-container *ngIf="!(authService.isAuthenticated$ | async); else userMenu">
+        <a routerLink="/login" class="nav-link signin-link">Sign In</a>
+        <a routerLink="/signup" class="btn btn-primary btn-sm">
+          <span>Start Free Trial</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </ng-container>
+
+      <ng-template #userMenu>
+        <div class="user-pill" *ngIf="authService.currentTenant$ | async as tenant">
+          <span class="tenant-name">{{ tenant.companyName }}</span>
+          <a [href]="tenant.workspaceUrl" target="_blank" class="btn btn-primary btn-sm">
+            <span>Go to App</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <button (click)="authService.logout()" class="btn btn-outline btn-sm" title="Sign Out">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </div>
+      </ng-template>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="Toggle navigation">
+        <i class="fa-solid" [class.fa-bars]="!isMobileMenuOpen" [class.fa-xmark]="isMobileMenuOpen"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" [class.open]="isMobileMenuOpen">
+    <div class="drawer-content">
+      <nav class="mobile-nav">
+        <a routerLink="/" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-solid fa-house"></i> Home
+        </a>
+        <a routerLink="/features" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-solid fa-cube"></i> Features & Modules
+        </a>
+        <a routerLink="/pricing" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-solid fa-tag"></i> Plans & Pricing
+        </a>
+        <a routerLink="/book-a-demo" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-regular fa-calendar-check"></i> Book a Demo
+        </a>
+        <a routerLink="/about" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-solid fa-circle-info"></i> About HR Atlas
+        </a>
+        <a routerLink="/contact" (click)="closeMobileMenu()" class="mobile-link">
+          <i class="fa-regular fa-envelope"></i> Contact Us
+        </a>
+      </nav>
+
+      <div class="mobile-drawer-footer">
+        <a routerLink="/login" (click)="closeMobileMenu()" class="btn btn-outline btn-block">Customer Login</a>
+        <a routerLink="/signup" (click)="closeMobileMenu()" class="btn btn-primary btn-block">Get Started Free</a>
+      </div>
+    </div>
+  </div>
+</header>
+

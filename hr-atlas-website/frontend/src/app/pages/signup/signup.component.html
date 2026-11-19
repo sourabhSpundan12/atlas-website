@@ -1,0 +1,428 @@
+<div class="signup-page">
+  <div class="signup-container">
+    <!-- Header with Progress Stepper -->
+    <div class="stepper-header">
+      <div class="brand-badge">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>HR Atlas Multi-Tenant Registration</span>
+      </div>
+      <h1 class="wizard-title">Launch Your Organisation Workspace</h1>
+      <p class="wizard-subtitle">Set up your company, verify your admin email, and activate your 14-day full access trial.</p>
+
+      <!-- 5-Step Visual Stepper -->
+      <div class="steps-progress">
+        <div class="step-node" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+          <div class="node-circle">
+            <i *ngIf="currentStep > 1" class="fa-solid fa-check"></i>
+            <span *ngIf="currentStep <= 1">1</span>
+          </div>
+          <span class="node-label">Company</span>
+        </div>
+        <div class="step-connector" [class.filled]="currentStep > 1"></div>
+
+        <div class="step-node" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+          <div class="node-circle">
+            <i *ngIf="currentStep > 2" class="fa-solid fa-check"></i>
+            <span *ngIf="currentStep <= 2">2</span>
+          </div>
+          <span class="node-label">Admin</span>
+        </div>
+        <div class="step-connector" [class.filled]="currentStep > 2"></div>
+
+        <div class="step-node" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+          <div class="node-circle">
+            <i *ngIf="currentStep > 3" class="fa-solid fa-check"></i>
+            <span *ngIf="currentStep <= 3">3</span>
+          </div>
+          <span class="node-label">Email OTP</span>
+        </div>
+        <div class="step-connector" [class.filled]="currentStep > 3"></div>
+
+        <div class="step-node" [class.active]="currentStep === 4" [class.completed]="currentStep > 4">
+          <div class="node-circle">
+            <i *ngIf="currentStep > 4" class="fa-solid fa-check"></i>
+            <span *ngIf="currentStep <= 4">4</span>
+          </div>
+          <span class="node-label">Trial Plan</span>
+        </div>
+        <div class="step-connector" [class.filled]="currentStep > 4"></div>
+
+        <div class="step-node" [class.active]="currentStep === 5" [class.completed]="currentStep === 5">
+          <div class="node-circle">
+            <i class="fa-solid fa-rocket"></i>
+          </div>
+          <span class="node-label">Workspace</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wizard Card Box -->
+    <div class="wizard-card">
+      <!-- STEP 1: Company Profile -->
+      <div *ngIf="currentStep === 1" class="step-view">
+        <h3 class="step-title"><i class="fa-solid fa-building"></i> Step 1: Tell us about your company</h3>
+        <p class="step-desc">This provisions your isolated multi-tenant database boundary and workspace domain.</p>
+
+        <form [formGroup]="companyForm" (ngSubmit)="nextToAdmin()">
+          <div class="form-group">
+            <label for="companyName">Company Legal Name *</label>
+            <input
+              id="companyName"
+              type="text"
+              class="form-control"
+              placeholder="e.g. Acme Global Technologies Ltd"
+              formControlName="companyName"
+              (input)="onCompanyNameChange()"
+              [class.is-invalid]="companyForm.get('companyName')?.touched && companyForm.get('companyName')?.invalid"
+            />
+            <div class="invalid-feedback" *ngIf="companyForm.get('companyName')?.touched && companyForm.get('companyName')?.invalid">
+              Company legal name is required (min 2 characters).
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="slug">Workspace Subdomain *</label>
+            <div class="slug-input-wrap">
+              <input
+                id="slug"
+                type="text"
+                class="form-control slug-input"
+                placeholder="acme-corp"
+                formControlName="slug"
+                (blur)="checkSlug()"
+                [class.is-invalid]="companyForm.get('slug')?.touched && companyForm.get('slug')?.invalid"
+              />
+              <span class="slug-suffix">.hratlas.com</span>
+            </div>
+            <div class="slug-status" *ngIf="isCheckingSlug">
+              <span class="spinner spinner-primary"></span> Checking workspace domain availability...
+            </div>
+            <div class="slug-status text-success" *ngIf="slugAvailable === true && !isCheckingSlug">
+              <i class="fa-solid fa-check"></i> {{ slugMessage || 'Workspace domain is available!' }}
+            </div>
+            <div class="slug-status text-danger" *ngIf="slugAvailable === false && !isCheckingSlug">
+              <i class="fa-solid fa-xmark"></i> {{ slugMessage }}
+            </div>
+            <span class="input-hint">Your team will access HR Atlas through this dedicated URL.</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="industry">Industry Vertical *</label>
+              <select id="industry" class="form-control" formControlName="industry">
+                <option *ngFor="let ind of industries" [value]="ind">{{ ind }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="companySize">Company Headcount *</label>
+              <select id="companySize" class="form-control" formControlName="companySize">
+                <option *ngFor="let size of companySizes" [value]="size">{{ size }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="country">Country of Incorporation *</label>
+              <select id="country" class="form-control" formControlName="country">
+                <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="timezone">Primary Timezone *</label>
+              <select id="timezone" class="form-control" formControlName="timezone">
+                <option value="Asia/Kolkata">Asia/Kolkata (IST +5:30)</option>
+                <option value="America/New_York">America/New_York (EST -5:00)</option>
+                <option value="Europe/London">Europe/London (GMT +0:00)</option>
+                <option value="Asia/Dubai">Asia/Dubai (GST +4:00)</option>
+                <option value="Asia/Singapore">Asia/Singapore (SGT +8:00)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wizard-actions">
+            <div></div>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <span>Next: Primary Admin Details</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 2: Primary Administrator -->
+      <div *ngIf="currentStep === 2" class="step-view">
+        <h3 class="step-title"><i class="fa-solid fa-user-shield"></i> Step 2: Primary Organisation Administrator</h3>
+        <p class="step-desc">This person will have master administrative credentials for your HR Atlas workspace.</p>
+
+        <form [formGroup]="adminForm" (ngSubmit)="nextToOtp()">
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="adminFullName">Admin Full Name *</label>
+              <input
+                id="adminFullName"
+                type="text"
+                class="form-control"
+                placeholder="e.g. Sarah Jenkins"
+                formControlName="adminFullName"
+                [class.is-invalid]="adminForm.get('adminFullName')?.touched && adminForm.get('adminFullName')?.invalid"
+              />
+              <div class="invalid-feedback" *ngIf="adminForm.get('adminFullName')?.touched && adminForm.get('adminFullName')?.invalid">
+                Full name is required.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="jobTitle">Job Title / Designation *</label>
+              <input
+                id="jobTitle"
+                type="text"
+                class="form-control"
+                placeholder="e.g. Head of People / Founder"
+                formControlName="jobTitle"
+              />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="adminEmail">Work Email Address *</label>
+              <input
+                id="adminEmail"
+                type="email"
+                class="form-control"
+                placeholder="sarah@acme.com"
+                formControlName="adminEmail"
+                [class.is-invalid]="adminForm.get('adminEmail')?.touched && adminForm.get('adminEmail')?.invalid"
+              />
+              <span class="input-hint">A 6-digit OTP verification code will be sent to this email.</span>
+              <div class="invalid-feedback" *ngIf="adminForm.get('adminEmail')?.touched && adminForm.get('adminEmail')?.invalid">
+                Valid corporate email is required.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="adminPhoneNumber">Phone Number *</label>
+              <input
+                id="adminPhoneNumber"
+                type="tel"
+                class="form-control"
+                placeholder="+91 9876543210"
+                formControlName="adminPhoneNumber"
+                [class.is-invalid]="adminForm.get('adminPhoneNumber')?.touched && adminForm.get('adminPhoneNumber')?.invalid"
+              />
+              <div class="invalid-feedback" *ngIf="adminForm.get('adminPhoneNumber')?.touched && adminForm.get('adminPhoneNumber')?.invalid">
+                Valid phone number is required (min 10 digits).
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Create Secure Master Password *</label>
+            <input
+              id="password"
+              type="password"
+              class="form-control"
+              placeholder="Minimum 8 characters with numbers & symbols"
+              formControlName="password"
+              [class.is-invalid]="adminForm.get('password')?.touched && adminForm.get('password')?.invalid"
+            />
+            <span class="input-hint">Hashed securely with cryptographic BCrypt before persistence.</span>
+            <div class="invalid-feedback" *ngIf="adminForm.get('password')?.touched && adminForm.get('password')?.invalid">
+              Password must be at least 8 characters.
+            </div>
+          </div>
+
+          <div class="terms-check">
+            <label>
+              <input type="checkbox" formControlName="agreeTerms" />
+              <span>I agree to the HR Atlas SaaS Terms of Service and Data Processing Agreement.</span>
+            </label>
+          </div>
+
+          <div class="wizard-actions">
+            <button type="button" class="btn btn-outline" (click)="currentStep = 1">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSendingOtp">
+              <span *ngIf="!isSendingOtp">Send Verification OTP</span>
+              <span *ngIf="isSendingOtp"><span class="spinner"></span> Dispatching Code...</span>
+              <i *ngIf="!isSendingOtp" class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 3: Email OTP Verification -->
+      <div *ngIf="currentStep === 3" class="step-view text-center">
+        <div class="otp-icon-header">
+          <i class="fa-regular fa-envelope"></i>
+        </div>
+        <h3 class="step-title">Verify Your Corporate Email</h3>
+        <p class="step-desc">
+          We sent a 6-digit confirmation code to <strong>{{ adminForm.get('adminEmail')?.value }}</strong>.
+        </p>
+
+        <div class="alert alert-info" *ngIf="otpSentMessage">
+          <i class="fa-solid fa-info-circle"></i> {{ otpSentMessage }}
+        </div>
+
+        <form [formGroup]="otpForm" (ngSubmit)="verifyOtpAndProceed()">
+          <div class="otp-inputs-grid">
+            <input id="otp-1" type="text" maxlength="1" class="otp-cell" formControlName="digit1" (input)="onDigitInput($event, 2)" autofocus />
+            <input id="otp-2" type="text" maxlength="1" class="otp-cell" formControlName="digit2" (input)="onDigitInput($event, 3)" />
+            <input id="otp-3" type="text" maxlength="1" class="otp-cell" formControlName="digit3" (input)="onDigitInput($event, 4)" />
+            <input id="otp-4" type="text" maxlength="1" class="otp-cell" formControlName="digit4" (input)="onDigitInput($event, 5)" />
+            <input id="otp-5" type="text" maxlength="1" class="otp-cell" formControlName="digit5" (input)="onDigitInput($event, 6)" />
+            <input id="otp-6" type="text" maxlength="1" class="otp-cell" formControlName="digit6" (input)="onDigitInput($event, 7)" />
+          </div>
+
+          <div class="resend-row">
+            <span *ngIf="resendCountdown > 0">Resend code in {{ resendCountdown }}s</span>
+            <button
+              *ngIf="resendCountdown <= 0"
+              type="button"
+              class="btn-link"
+              (click)="sendVerificationOtp()"
+            >
+              Didn't receive code? Resend OTP
+            </button>
+          </div>
+
+          <div class="wizard-actions">
+            <button type="button" class="btn btn-outline" (click)="currentStep = 2">
+              <i class="fa-solid fa-arrow-left"></i> Change Email
+            </button>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <span>Verify & Continue</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 4: Trial Plan Selection & Confirmation -->
+      <div *ngIf="currentStep === 4" class="step-view">
+        <h3 class="step-title"><i class="fa-solid fa-award"></i> Step 4: Select Your 14-Day Free Trial Tier</h3>
+        <p class="step-desc">All plans include complete platform access during trial. Upgrade or switch anytime.</p>
+
+        <form [formGroup]="planForm" (ngSubmit)="submitFinalRegistration()">
+          <div class="plan-cards-select">
+            <!-- Starter Option -->
+            <label class="plan-select-card" [class.selected]="planForm.get('planId')?.value === 'starter'">
+              <input type="radio" value="starter" formControlName="planId" />
+              <div class="p-card-body">
+                <div class="p-top">
+                  <span class="p-name">Starter Plan</span>
+                  <span class="p-price">&#8377;1,499 / mo</span>
+                </div>
+                <p class="p-seats"><i class="fa-solid fa-user-group"></i> Up to 15 Employees</p>
+                <p class="p-desc">Employee Lifecycle, Web Attendance & Auto Clock-Out, Leaves, Broadcasts.</p>
+              </div>
+            </label>
+
+            <!-- Growth Option (Default) -->
+            <label class="plan-select-card" [class.selected]="planForm.get('planId')?.value === 'growth'">
+              <input type="radio" value="growth" formControlName="planId" />
+              <div class="p-card-body">
+                <div class="p-top">
+                  <div class="title-with-pill">
+                    <span class="p-name">Growth Plan</span>
+                    <span class="badge badge-emerald">Recommended</span>
+                  </div>
+                  <span class="p-price">&#8377;3,999 / mo</span>
+                </div>
+                <p class="p-seats"><i class="fa-solid fa-user-group"></i> Up to 50 Employees</p>
+                <p class="p-desc">Complete Payroll, Automated PDF Payslips, Project Timesheets, Asset Inventory.</p>
+              </div>
+            </label>
+
+            <!-- Enterprise Option -->
+            <label class="plan-select-card" [class.selected]="planForm.get('planId')?.value === 'enterprise'">
+              <input type="radio" value="enterprise" formControlName="planId" />
+              <div class="p-card-body">
+                <div class="p-top">
+                  <span class="p-name">Enterprise Plan</span>
+                  <span class="p-price">&#8377;9,999 / mo</span>
+                </div>
+                <p class="p-seats"><i class="fa-solid fa-user-group"></i> Custom & 500+ Seats</p>
+                <p class="p-desc">Dedicated Account Manager, 99.9% SLA, Custom RBAC, Webhooks & REST APIs.</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="summary-box">
+            <div class="sum-row">
+              <span>Organisation Legal Entity:</span>
+              <strong>{{ companyForm.get('companyName')?.value }}</strong>
+            </div>
+            <div class="sum-row">
+              <span>Tenant Workspace URL:</span>
+              <strong>https://{{ companyForm.get('slug')?.value }}.hratlas.com</strong>
+            </div>
+            <div class="sum-row">
+              <span>Primary Admin Account:</span>
+              <strong>{{ adminForm.get('adminEmail')?.value }}</strong>
+            </div>
+            <div class="sum-row">
+              <span>Trial Period:</span>
+              <strong class="text-success">14 Days Full Access (Zero Billing Today)</strong>
+            </div>
+          </div>
+
+          <div class="wizard-actions">
+            <button type="button" class="btn btn-outline" (click)="currentStep = 3">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSubmittingRegistration">
+              <span *ngIf="!isSubmittingRegistration">Complete Organisation Setup</span>
+              <span *ngIf="isSubmittingRegistration"><span class="spinner"></span> Provisioning Multi-Tenant Database...</span>
+              <i *ngIf="!isSubmittingRegistration" class="fa-solid fa-check"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 5: Provisioning & Success -->
+      <div *ngIf="currentStep === 5 && provisionedResult" class="step-view text-center success-view">
+        <div class="success-icon-box">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h2 class="success-title">Organisation Successfully Provisioned!</h2>
+        <p class="success-desc">
+          Welcome to HR Atlas, <strong>{{ provisionedResult.companyName }}</strong>. Your isolated workspace and primary administrative credentials are now live.
+        </p>
+
+        <div class="provision-details-box">
+          <div class="detail-item">
+            <span class="d-label">Assigned TenantId</span>
+            <span class="d-val font-mono">{{ provisionedResult.tenantId }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="d-label">Workspace URL</span>
+            <span class="d-val font-mono">{{ provisionedResult.workspaceUrl }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="d-label">Subscription Tier</span>
+            <span class="d-val text-success">{{ provisionedResult.subscription.planName }} (14-Day Free Trial)</span>
+          </div>
+          <div class="detail-item">
+            <span class="d-label">Employee Seat Limit</span>
+            <span class="d-val">{{ provisionedResult.subscription.maxSeats }} Seats Included</span>
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <button (click)="goToDashboard()" class="btn btn-primary btn-lg">
+            <span>Enter HR Atlas Dashboard</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </button>
+          <a routerLink="/" class="btn btn-outline btn-lg">Return to Homepage</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

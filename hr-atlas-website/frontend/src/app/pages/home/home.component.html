@@ -1,0 +1,470 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-glow"></div>
+  <div class="container hero-container">
+    <div class="hero-badge-wrap">
+      <span class="badge badge-blue">
+        <i class="fa-solid fa-sparkles"></i> Next-Gen Enterprise SaaS HRMS
+      </span>
+      <span class="hero-badge-text">Engineered for High-Growth Teams</span>
+    </div>
+
+    <h1 class="hero-headline">
+      The Modern Operating System for <span class="text-gradient">HR, Payroll & People</span>
+    </h1>
+
+    <p class="hero-subtext">
+      From onboarding and automated auto clock-out attendance to automated PDF payslips, project timesheets, and inventory management. Run your entire workforce on one cohesive multi-tenant platform.
+    </p>
+
+    <div class="hero-cta-group">
+      <a routerLink="/signup" class="btn btn-primary btn-lg">
+        <span>Start 14-Day Free Trial</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a routerLink="/book-a-demo" class="btn btn-outline btn-lg">
+        <i class="fa-regular fa-calendar-check"></i>
+        <span>Schedule Guided Demo</span>
+      </a>
+    </div>
+
+    <div class="hero-trust-bar">
+      <span><i class="fa-solid fa-circle-check text-success"></i> No credit card required</span>
+      <span class="dot">&bull;</span>
+      <span><i class="fa-solid fa-circle-check text-success"></i> 2-minute instant onboarding</span>
+      <span class="dot">&bull;</span>
+      <span><i class="fa-solid fa-circle-check text-success"></i> Strict multi-tenant data isolation</span>
+    </div>
+
+    <!-- Interactive Dashboard Mockup Preview -->
+    <div class="dashboard-preview-card">
+      <div class="card-browser-bar">
+        <div class="browser-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="browser-address">
+          <i class="fa-solid fa-lock"></i>
+          <span>app.hratlas.com/workspace/acme-corp</span>
+        </div>
+        <div class="browser-actions">
+          <span class="badge badge-emerald">Live Workspace</span>
+        </div>
+      </div>
+
+      <!-- Preview Navigation Tabs -->
+      <div class="preview-tabs">
+        <button [class.active]="activePreviewTab === 'attendance'" (click)="setPreviewTab('attendance')">
+          <i class="fa-regular fa-clock"></i> Attendance & Auto Clock-Out
+        </button>
+        <button [class.active]="activePreviewTab === 'payroll'" (click)="setPreviewTab('payroll')">
+          <i class="fa-solid fa-file-invoice-dollar"></i> Payroll & PDF Payslips
+        </button>
+        <button [class.active]="activePreviewTab === 'lifecycle'" (click)="setPreviewTab('lifecycle')">
+          <i class="fa-solid fa-users-gear"></i> Employee Lifecycle
+        </button>
+        <button [class.active]="activePreviewTab === 'inventory'" (click)="setPreviewTab('inventory')">
+          <i class="fa-solid fa-laptop"></i> Inventory & Assets
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="preview-display">
+        <!-- Attendance Tab -->
+        <div *ngIf="activePreviewTab === 'attendance'" class="preview-pane">
+          <div class="preview-metrics-row">
+            <div class="metric-card">
+              <span class="m-label">Present Today</span>
+              <span class="m-val text-success">42 / 45</span>
+              <span class="m-badge">93.3% On Time</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">Auto Clock-Out Rule</span>
+              <span class="m-val">Active</span>
+              <span class="m-badge">Trigger: 10 hrs inactivity</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">Pending Comp-Offs</span>
+              <span class="m-val text-primary">3 Requests</span>
+              <span class="m-badge">Action Required</span>
+            </div>
+          </div>
+
+          <div class="preview-table-wrap">
+            <table class="preview-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Clock In</th>
+                  <th>Clock Out</th>
+                  <th>Effective Hours</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Alex Morgan</strong><span class="sub">Engineering Lead</span></td>
+                  <td>09:02 AM</td>
+                  <td>06:05 PM</td>
+                  <td>9h 03m</td>
+                  <td><span class="status-tag present">Completed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Priya Sharma</strong><span class="sub">Senior Product Designer</span></td>
+                  <td>09:28 AM</td>
+                  <td>-- : --</td>
+                  <td>8h 12m</td>
+                  <td><span class="status-tag in-progress">Clocked In</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Liam Davies</strong><span class="sub">DevOps Engineer</span></td>
+                  <td>08:55 AM</td>
+                  <td>07:00 PM</td>
+                  <td>10h 05m</td>
+                  <td><span class="status-tag auto-clock">Auto Clocked-Out</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Payroll Tab -->
+        <div *ngIf="activePreviewTab === 'payroll'" class="preview-pane">
+          <div class="preview-metrics-row">
+            <div class="metric-card">
+              <span class="m-label">November Payroll Batch</span>
+              <span class="m-val">&#8377; 34,80,000</span>
+              <span class="m-badge">45 Employees Processed</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">Payslips Generated</span>
+              <span class="m-val text-success">100% PDF</span>
+              <span class="m-badge">Ready for Dispatch</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">TDS & Compliance</span>
+              <span class="m-val text-emerald">Verified</span>
+              <span class="m-badge">Form 16 Ready</span>
+            </div>
+          </div>
+          <div class="payslip-preview-box">
+            <div class="payslip-header">
+              <div>
+                <h5>Acme Global Technologies Pvt Ltd</h5>
+                <p>Payslip for the month of November 2026</p>
+              </div>
+              <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Download Sample PDF</button>
+            </div>
+            <div class="payslip-grid">
+              <div class="ps-col">
+                <h6>Earnings</h6>
+                <div class="ps-row"><span>Basic Salary</span><span>&#8377; 65,000</span></div>
+                <div class="ps-row"><span>HRA Allowance</span><span>&#8377; 26,000</span></div>
+                <div class="ps-row"><span>Special Allowance</span><span>&#8377; 19,000</span></div>
+              </div>
+              <div class="ps-col">
+                <h6>Deductions</h6>
+                <div class="ps-row"><span>Provident Fund (PF)</span><span>&#8377; 1,800</span></div>
+                <div class="ps-row"><span>Professional Tax (PT)</span><span>&#8377; 200</span></div>
+                <div class="ps-row"><span>TDS Income Tax</span><span>&#8377; 8,500</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lifecycle Tab -->
+        <div *ngIf="activePreviewTab === 'lifecycle'" class="preview-pane">
+          <div class="lifecycle-steps">
+            <div class="step-card completed">
+              <div class="step-icon"><i class="fa-solid fa-envelope-circle-check"></i></div>
+              <h6>Onboarding Email</h6>
+              <p>Automated welcome credentials & paperwork sent</p>
+            </div>
+            <div class="step-card active">
+              <div class="step-icon"><i class="fa-solid fa-id-card"></i></div>
+              <h6>Document Verification</h6>
+              <p>PAN, Aadhaar & Degree documents stored</p>
+            </div>
+            <div class="step-card">
+              <div class="step-icon"><i class="fa-solid fa-laptop-code"></i></div>
+              <h6>Hardware Allocation</h6>
+              <p>MacBook Pro M3 allocated from Asset Inventory</p>
+            </div>
+            <div class="step-card">
+              <div class="step-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <h6>Probation & Review</h6>
+              <p>90-day confirmation milestone scheduled</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div *ngIf="activePreviewTab === 'inventory'" class="preview-pane">
+          <div class="preview-metrics-row">
+            <div class="metric-card">
+              <span class="m-label">Total Assigned Hardware</span>
+              <span class="m-val">68 Assets</span>
+              <span class="m-badge">Laptops, Monitors, Access Keys</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">In Stock / Pool</span>
+              <span class="m-val text-primary">12 Items</span>
+              <span class="m-badge">Ready for Allocation</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">Depreciation Tracking</span>
+              <span class="m-val text-success">Automated</span>
+              <span class="m-badge">Straight-line model</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Proof Numbers Strip -->
+<section class="metrics-strip">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <span class="num">99.98%</span>
+        <span class="label">Cloud SLA Uptime</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">8.5 hrs</span>
+        <span class="label">Saved Weekly per HR Manager</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">100%</span>
+        <span class="label">Statutory & Tax Compliance</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">14 Days</span>
+        <span class="label">Full Feature Trial with No Risk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modules Overview -->
+<section class="section section-slate" id="modules">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-blue">Complete Module Suite</span>
+      <h2 class="section-title">Built-In Capabilities. Zero Third-Party Clutter.</h2>
+      <p class="section-subtitle">
+        HR Atlas delivers all the core features modern businesses expect from greytHR, Zoho People, and BambooHR — unified into a seamless, fast platform.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <!-- 1 -->
+      <div class="card module-card">
+        <div class="mod-icon blue"><i class="fa-solid fa-users-viewfinder"></i></div>
+        <h3>Employee Lifecycle Management</h3>
+        <p>Complete record from hire to retire. Digital employee profiles, document vaults, probation milestones, promotion histories, and smooth offboarding.</p>
+        <a routerLink="/features" class="learn-link">Explore Lifecycle <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 2 -->
+      <div class="card module-card">
+        <div class="mod-icon indigo"><i class="fa-regular fa-clock"></i></div>
+        <h3>Attendance & Auto Clock-Out</h3>
+        <p>Real-time geofenced or web check-in with intelligent auto clock-out rules after configurable inactivity periods to prevent erroneous overtime claims.</p>
+        <a routerLink="/features" class="learn-link">Explore Attendance <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 3 -->
+      <div class="card module-card">
+        <div class="mod-icon emerald"><i class="fa-solid fa-calendar-days"></i></div>
+        <h3>Leave & Comp-Off Management</h3>
+        <p>Flexible leave policies, multi-tier approvals, sandwich rule configuration, automatic compensatory-off credits for weekend shifts, and real-time balances.</p>
+        <a routerLink="/features" class="learn-link">Explore Leaves <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 4 -->
+      <div class="card module-card">
+        <div class="mod-icon amber"><i class="fa-solid fa-calculator"></i></div>
+        <h3>Salary & Payroll Processing</h3>
+        <p>Comprehensive salary structuring, automated tax calculations (Old & New tax regimes), statutory deductions (PF, ESI, PT), and one-click salary disbursement files.</p>
+        <a routerLink="/features" class="learn-link">Explore Payroll <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 5 -->
+      <div class="card module-card">
+        <div class="mod-icon rose"><i class="fa-solid fa-file-pdf"></i></div>
+        <h3>Automated PDF Payslips</h3>
+        <p>Password-protected, branded PDF payslips generated instantly and dispatched securely to employee inboxes with breakdown of earnings and deductions.</p>
+        <a routerLink="/features" class="learn-link">Explore Payslips <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 6 -->
+      <div class="card module-card">
+        <div class="mod-icon cyan"><i class="fa-solid fa-business-time"></i></div>
+        <h3>Timesheets & Project Tracking</h3>
+        <p>Billable hours tracking, project task allocations, manager approvals, client rate tracking, and seamless export to invoicing systems.</p>
+        <a routerLink="/features" class="learn-link">Explore Timesheets <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 7 -->
+      <div class="card module-card">
+        <div class="mod-icon purple"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <h3>Inventory & Asset Management</h3>
+        <p>Keep track of high-value company assets: laptops, monitors, peripherals, and software licenses. Handover acknowledgments and return workflows.</p>
+        <a routerLink="/features" class="learn-link">Explore Inventory <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 8 -->
+      <div class="card module-card">
+        <div class="mod-icon teal"><i class="fa-solid fa-envelope-open-text"></i></div>
+        <h3>Employee Onboarding Emails</h3>
+        <p>Trigger beautiful automated welcome packages, portal invite tokens, day-one agendas, and manager introduction emails without manual drafting.</p>
+        <a routerLink="/features" class="learn-link">Explore Onboarding <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <!-- 9 -->
+      <div class="card module-card">
+        <div class="mod-icon sky"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3>Broadcasts & Real-Time Alerts</h3>
+        <p>Send company-wide emergency announcements, policy updates, and holiday calendars with instant read-receipt tracking and web push alerts.</p>
+        <a routerLink="/features" class="learn-link">Explore Broadcasts <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive ROI Calculator -->
+<section class="section">
+  <div class="container">
+    <div class="calc-card">
+      <div class="calc-content">
+        <span class="badge badge-emerald">Interactive Value Calculator</span>
+        <h2 class="calc-title">Calculate Your Team's Time & Cost Savings</h2>
+        <p class="calc-desc">
+          Drag the slider to your current employee headcount and see the quantified administrative hours HR Atlas will reclaim for strategic talent growth.
+        </p>
+
+        <div class="slider-box">
+          <div class="slider-header">
+            <span>Team Headcount</span>
+            <span class="count-tag">{{ calculatorSeats }} Employees</span>
+          </div>
+          <input
+            type="range"
+            min="5"
+            max="250"
+            step="5"
+            [(ngModel)]="calculatorSeats"
+            class="range-slider"
+          />
+          <div class="slider-ticks">
+            <span>5 seats</span>
+            <span>100 seats</span>
+            <span>250+ seats</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-result-box">
+        <div class="result-tile">
+          <span class="res-num">{{ hoursSavedPerMonth }} hrs</span>
+          <span class="res-lbl">HR Admin Hours Saved / Month</span>
+        </div>
+        <div class="result-tile">
+          <span class="res-num">&#8377; {{ costSavingsINR | number }}</span>
+          <span class="res-lbl">Estimated Monthly Operational ROI</span>
+        </div>
+        <a routerLink="/signup" class="btn btn-primary btn-block">
+          <span>Start Saving with HR Atlas</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison with Competitors -->
+<section class="section section-slate">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-blue">The HR Atlas Advantage</span>
+      <h2 class="section-title">Why Scaling Companies Choose HR Atlas</h2>
+      <p class="section-subtitle">
+        See how our purpose-built modern platform compares against traditional, legacy HR software.
+      </p>
+    </div>
+
+    <div class="comparison-table-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Key Criteria</th>
+            <th class="highlight-col">HR Atlas</th>
+            <th>greytHR</th>
+            <th>Zoho People</th>
+            <th>BambooHR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Modern Single-Tenant Isolation / Multi-Tenant Security</strong></td>
+            <td class="highlight-col text-success"><i class="fa-solid fa-check"></i> Standard & Verified</td>
+            <td>Multi-tenant shared</td>
+            <td>Shared Cloud</td>
+            <td>Shared Cloud</td>
+          </tr>
+          <tr>
+            <td><strong>Automated Auto Clock-Out Engine</strong></td>
+            <td class="highlight-col text-success"><i class="fa-solid fa-check"></i> Built-in Intelligent Rule</td>
+            <td>Manual or Add-on</td>
+            <td>Complex Setup</td>
+            <td>Not available</td>
+          </tr>
+          <tr>
+            <td><strong>Automated PDF Payslip Generation</strong></td>
+            <td class="highlight-col text-success"><i class="fa-solid fa-check"></i> Included with Zero Fees</td>
+            <td>Included</td>
+            <td>Requires Zoho Payroll</td>
+            <td>US/Canada only</td>
+          </tr>
+          <tr>
+            <td><strong>Hardware & Asset Inventory Tracking</strong></td>
+            <td class="highlight-col text-success"><i class="fa-solid fa-check"></i> Native Module</td>
+            <td>Not available</td>
+            <td>Separate app needed</td>
+            <td>Basic note only</td>
+          </tr>
+          <tr>
+            <td><strong>Instant 14-Day Full Access Trial</strong></td>
+            <td class="highlight-col text-success"><i class="fa-solid fa-check"></i> Instant Self-Service</td>
+            <td>Sales rep call first</td>
+            <td>Limited tier</td>
+            <td>Demo required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- High-Converting Bottom Banner -->
+<section class="cta-banner">
+  <div class="container cta-container">
+    <div class="cta-text">
+      <h2>Transform Your People Operations Today</h2>
+      <p>Join hundreds of high-growth businesses saving hours every week on attendance, payroll, and asset management.</p>
+    </div>
+    <div class="cta-buttons">
+      <a routerLink="/signup" class="btn btn-white btn-lg">
+        <span>Start 14-Day Free Trial</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a routerLink="/contact" class="btn btn-outline-white btn-lg">
+        <span>Talk to Enterprise Sales</span>
+      </a>
+    </div>
+  </div>
+</section>
+
